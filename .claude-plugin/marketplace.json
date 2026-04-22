@@ -1,5 +1,9 @@
 {
   "name": "luca-claude-toolkit",
+  "metadata": {
+    "description": "Luca's personal Claude Code marketplace — skills, agents, and hooks for everyday engineering workflows.",
+    "version": "0.1.0"
+  },
   "owner": {
     "name": "Luca Sailer",
     "email": "luca.sailer.ls@gmail.com"
