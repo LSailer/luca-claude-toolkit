@@ -11,6 +11,7 @@ This repo is both a **plugin** and a **single-plugin marketplace**: adding the r
 | Component | Name | Description |
 |-----------|------|-------------|
 | Skill | `pencil-design` | Generate UI mockups, slides, dashboards, and marketing visuals using the [Pencil](https://www.npmjs.com/package/@pencil.dev/cli) CLI. |
+| Script | `statusline.sh` | Status line showing model, folder, and a 10-segment context-usage bar (green / yellow / red, scaled to 1M tokens). |
 
 More skills, agents, and hooks will land in `skills/`, `agents/`, `hooks/` over time.
 
@@ -163,18 +164,24 @@ jq -r '.tool_input.file_path // empty' | xargs -r prettier --write
 
 ---
 
-## Bundle a statusline script
+## Enable the bundled statusline
 
-`statusLine` is a per-device *settings* feature — the plugin can ship the script but cannot auto-wire it. Each device still needs one line in `~/.claude/settings.json`:
+This plugin ships `scripts/statusline.sh` — a context-usage bar (`▰▰▰▱▱▱▱▱▱▱`) that fills as tokens grow and switches from green → yellow → red at the 100k and 500k thresholds (scaled to a 1M-token context).
+
+`statusLine` is a per-device *settings* feature — the plugin can ship the script but cannot auto-wire it. Paste this block into `~/.claude/settings.json` once per device:
 
 ```json
 "statusLine": {
   "type": "command",
-  "command": "bash ~/.claude/plugins/marketplaces/luca-claude-toolkit/plugins/luca-toolkit/scripts/<your-script>.sh"
+  "command": "bash ~/.claude/plugins/marketplaces/luca-claude-toolkit/plugins/luca-toolkit/scripts/statusline.sh"
 }
 ```
 
 If that path turns out to be unstable across Claude Code versions, symlink it from `~/.claude/` and point settings at the symlink.
+
+### Ship your own statusline instead
+
+Drop a new script in `scripts/`, make it executable (`chmod +x`), bump `plugin.json` version, push. Point `settings.json` at the new filename.
 
 ---
 
