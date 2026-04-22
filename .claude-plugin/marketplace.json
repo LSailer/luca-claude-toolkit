@@ -1,0 +1,14 @@
+{
+  "name": "luca-claude-toolkit",
+  "owner": {
+    "name": "Luca Sailer",
+    "email": "luca.sailer.ls@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "luca-toolkit",
+      "source": "./",
+      "description": "Luca's skills + pencil-design"
+    }
+  ]
+}
