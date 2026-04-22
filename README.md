@@ -34,7 +34,7 @@ Only required the first time you use `pencil-design` on a device. Add a local fa
 ## Install on a new device
 
 ```
-/plugin marketplace add <your-github-user>/luca-claude-toolkit
+/plugin marketplace add LSailer/luca-claude-toolkit
 /plugin install luca-toolkit@luca-claude-toolkit
 ```
 

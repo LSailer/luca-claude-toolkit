@@ -6,5 +6,6 @@
     "name": "Luca Sailer",
     "email": "luca.sailer.ls@gmail.com"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": "https://github.com/LSailer/luca-claude-toolkit"
 }
