@@ -1,7 +1,7 @@
 {
   "name": "luca-toolkit",
-  "version": "0.2.0",
-  "description": "Luca's Claude Code skills, agents, and hooks. Ships with pencil-design + a context-usage bar statusline.",
+  "version": "0.3.0",
+  "description": "Luca's Claude Code skills, agents, and hooks. Ships with pencil-design, a context-usage bar statusline, and a session-recap hook that builds a per-project knowledge wiki.",
   "author": {
     "name": "Luca Sailer",
     "email": "luca.sailer.ls@gmail.com"

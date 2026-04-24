@@ -12,6 +12,7 @@ This repo is both a **plugin** and a **single-plugin marketplace**: adding the r
 |-----------|------|-------------|
 | Skill | `pencil-design` | Generate UI mockups, slides, dashboards, and marketing visuals using the [Pencil](https://www.npmjs.com/package/@pencil.dev/cli) CLI. |
 | Script | `statusline.sh` | Status line showing model, folder, and a 10-segment context-usage bar (green / yellow / red, scaled to 1M tokens). |
+| Hook | `session-recap` | `SessionEnd` hook that runs Claude headlessly to turn the transcript into a Karpathy-style wiki at `<project>/.claude/knowledge/` (per-session recaps + evergreen concept pages + index). |
 
 More skills, agents, and hooks will land in `skills/`, `agents/`, `hooks/` over time.
 
@@ -182,6 +183,34 @@ If that path turns out to be unstable across Claude Code versions, symlink it fr
 ### Ship your own statusline instead
 
 Drop a new script in `scripts/`, make it executable (`chmod +x`), bump `plugin.json` version, push. Point `settings.json` at the new filename.
+
+---
+
+## The bundled `session-recap` hook
+
+`hooks/session-recap.sh` is wired to `SessionEnd` via `hooks/hooks.json` — it auto-activates when the plugin installs. No per-device settings changes needed.
+
+On every meaningful session end, the hook runs `claude -p` headlessly (Sonnet 4.6 by default, $1 budget cap) with a tightly scoped toolset (`Read,Write,Edit,Glob`) and asks it to read the transcript and update a Karpathy-style wiki at `<project>/.claude/knowledge/`:
+
+- `recaps/<timestamp>-<slug>.md` — immutable per-session recap (key takeaways, concepts touched, files changed, what worked, what we learned)
+- `concepts/<concept>.md` — evergreen concept pages that accrete across sessions
+- `index.md` — tag directory + recent-sessions feed (trimmed to last 20)
+
+**Gates that keep it cheap and safe:**
+- Only runs in git repos (no recaps for `$HOME` or scratch dirs).
+- Skips throwaway sessions (< 5 user messages *and* < 10 tool calls).
+- `CLAUDE_RECAP_RUNNING` guard prevents the inner `claude -p` from retriggering the hook.
+- Errors go to `~/.claude/knowledge/_errors.log` — it never blocks session shutdown.
+
+**Per-device overrides** (optional env vars):
+- `CLAUDE_RECAP_MODEL` — defaults to `claude-sonnet-4-6`. Set to `claude-opus-4-7` for richer synthesis.
+- `CLAUDE_RECAP_BUDGET` — defaults to `1.00` (USD).
+
+**Recommended:** add `.claude/knowledge/` to each project's `.gitignore` unless you want the wiki committed.
+
+### Migrating from a local copy
+
+If you already have `session-recap.sh` wired up in `~/.claude/settings.json` from a previous manual install, remove the `hooks.SessionEnd` block from that file after `/plugin update luca-toolkit` — otherwise the hook fires twice. You can delete `~/.claude/hooks/session-recap.sh` and `~/.claude/hooks/session-recap-prompt.md` too; the plugin now owns those.
 
 ---
 
