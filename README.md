@@ -11,6 +11,7 @@ This repo is both a **plugin** and a **single-plugin marketplace**: adding the r
 | Component | Name | Description |
 |-----------|------|-------------|
 | Skill | `pencil-design` | Generate UI mockups, slides, dashboards, and marketing visuals using the [Pencil](https://www.npmjs.com/package/@pencil.dev/cli) CLI. |
+| Skill | `what-would-i-skip` | Generate 10 high-leverage Claude Code playbooks for tasks the user wouldn't do manually because the time cost isn't worth it. |
 | Script | `statusline.sh` | Status line showing model, folder, and a 10-segment context-usage bar (green / yellow / red, scaled to 1M tokens). |
 | Hook | `session-recap` | `SessionEnd` hook that runs Claude headlessly to turn the transcript into a Karpathy-style wiki at `<project>/.claude/knowledge/` (per-session recaps + evergreen concept pages + index). |
 
