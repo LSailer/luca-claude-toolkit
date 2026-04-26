@@ -12,6 +12,7 @@ This repo is both a **plugin** and a **single-plugin marketplace**: adding the r
 |-----------|------|-------------|
 | Skill | `pencil-design` | Generate UI mockups, slides, dashboards, and marketing visuals using the [Pencil](https://www.npmjs.com/package/@pencil.dev/cli) CLI. |
 | Skill | `what-would-i-skip` | Generate 10 high-leverage Claude Code playbooks for tasks the user wouldn't do manually because the time cost isn't worth it. |
+| Skill | `wiki` | Interactive companion to the `session-recap` hook — init, ingest external sources, query with citations, and lint the project's knowledge wiki at `<project>/.claude/knowledge/`. |
 | Script | `statusline.sh` | Status line showing model, folder, and a 10-segment context-usage bar (green / yellow / red, scaled to 1M tokens). |
 | Hook | `session-recap` | `SessionEnd` hook that runs Claude headlessly to turn the transcript into a Karpathy-style wiki at `<project>/.claude/knowledge/` (per-session recaps + evergreen concept pages + index). |
 
@@ -59,6 +60,8 @@ Then restart Claude Code.
 ---
 
 ## Add a new skill
+
+Before proposing a new skill, scan `skills/` and `hooks/` — there may already be one for it. (Claude already lists every available skill in its system prompt and matches them to your phrasing automatically; the lever for "auto-invocation" is just a trigger-rich `description`.)
 
 Skills are Markdown files with YAML frontmatter. Claude Code auto-discovers every folder under `skills/` — no manifest changes needed.
 
